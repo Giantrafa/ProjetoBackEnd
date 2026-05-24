@@ -1,6 +1,7 @@
 package com.example.demo.security;
 
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Base64;
@@ -57,7 +58,7 @@ public class TokenService {
             }
 
             String unsignedToken = partes[0] + "." + partes[1];
-            if (!assinar(unsignedToken).equals(partes[2])) {
+            if (!assinaturaValida(assinar(unsignedToken), partes[2])) {
                 return false;
             }
 
@@ -105,5 +106,11 @@ public class TokenService {
         } catch (Exception exception) {
             throw new IllegalStateException("Nao foi possivel assinar o token.", exception);
         }
+    }
+
+    private boolean assinaturaValida(String assinaturaEsperada, String assinaturaRecebida) {
+        byte[] esperada = assinaturaEsperada.getBytes(StandardCharsets.UTF_8);
+        byte[] recebida = assinaturaRecebida.getBytes(StandardCharsets.UTF_8);
+        return MessageDigest.isEqual(esperada, recebida);
     }
 }

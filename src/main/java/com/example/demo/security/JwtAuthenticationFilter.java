@@ -13,15 +13,13 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
-
-    public JwtAuthenticationFilter(TokenService tokenService) {
-        this.tokenService = tokenService;
-    }
 
     @Override
     protected void doFilterInternal(
