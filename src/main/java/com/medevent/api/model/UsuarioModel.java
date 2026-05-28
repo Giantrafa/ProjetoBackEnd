@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.medevent.api.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,15 +24,15 @@ public class UsuarioModel {
     private Long id;
 
     @Column(nullable = false)
-    private String nome;
+    private String name;
 
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
-    private String senha;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Perfil perfil;
+    private Perfil role;
 }
