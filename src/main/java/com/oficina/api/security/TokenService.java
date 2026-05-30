@@ -1,4 +1,4 @@
-package com.medevent.api.security;
+package com.oficina.api.security;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.medevent.api.model.UsuarioModel;
+import com.oficina.api.model.UsuarioModel;
 
 @Service
 public class TokenService {

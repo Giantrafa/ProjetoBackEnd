@@ -1,4 +1,4 @@
-package com.medevent.api.model;
+package com.oficina.api.model;
 
 public enum Perfil {
     ADMIN,

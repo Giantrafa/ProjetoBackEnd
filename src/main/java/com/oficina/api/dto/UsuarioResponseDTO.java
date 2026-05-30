@@ -1,6 +1,6 @@
-package com.medevent.api.dto;
+package com.oficina.api.dto;
 
-import com.medevent.api.model.UsuarioModel;
+import com.oficina.api.model.UsuarioModel;
 
 public record UsuarioResponseDTO(String name, String email, String role) {
     public static UsuarioResponseDTO from(UsuarioModel usuario) {

@@ -1,18 +1,18 @@
-package com.medevent.api.service;
+package com.oficina.api.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.medevent.api.dto.AuthResponseDTO;
-import com.medevent.api.dto.LoginRequestDTO;
-import com.medevent.api.dto.RegisterRequestDTO;
-import com.medevent.api.dto.UsuarioResponseDTO;
-import com.medevent.api.model.Perfil;
-import com.medevent.api.model.UsuarioModel;
-import com.medevent.api.repository.UsuarioRepository;
-import com.medevent.api.security.TokenService;
+import com.oficina.api.dto.AuthResponseDTO;
+import com.oficina.api.dto.LoginRequestDTO;
+import com.oficina.api.dto.RegisterRequestDTO;
+import com.oficina.api.dto.UsuarioResponseDTO;
+import com.oficina.api.model.Perfil;
+import com.oficina.api.model.UsuarioModel;
+import com.oficina.api.repository.UsuarioRepository;
+import com.oficina.api.security.TokenService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,7 +29,7 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email e senha sao obrigatorios.");
         }
 
-        String email = request.email().trim();
+        String email = request.email().trim().toLowerCase();
         if (email.isEmpty() || request.password().isBlank()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Email e senha sao obrigatorios.");
         }
@@ -50,7 +50,7 @@ public class AuthService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Nome, email e senha sao obrigatorios.");
         }
 
-        String email = request.email().trim();
+        String email = request.email().trim().toLowerCase();
         if (usuarioRepository.findByEmail(email).isPresent()) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email ja cadastrado.");
         }

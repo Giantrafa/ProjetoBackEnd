@@ -1,4 +1,4 @@
-package com.medevent.api.security;
+package com.oficina.api.security;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.medevent.api.repository.UsuarioRepository;
+import com.oficina.api.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +36,7 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register", "/auth/forgot-password", "/auth/reset-password").permitAll()
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
                 .anyRequest().authenticated()
             )
