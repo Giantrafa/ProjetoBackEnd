@@ -13,17 +13,17 @@ import java.util.Optional;
 @Repository
 public interface ClientRepository extends JpaRepository<ClienteModel, Long> {
 
-    Optional<ClienteModel> findByCpfCnpj(String cpfCnpj); //o spring consegue gerar o SQL sozinho
+    Optional<ClientModel> findByCpfCnpj(String cpfCnpj); //o spring consegue gerar o SQL sozinho
 
     boolean existsByCpfCnpj(String cpfCnpj);
 
-    @Query("SELECT COUNT(c) > 0 FROM ClienteModel c WHERE c.cpfCnpj = :cpfCnpj AND c.id <> :id")
+    @Query("SELECT COUNT(c) > 0 FROM ClientModel c WHERE c.cpfCnpj = :cpfCnpj AND c.id <> :id")
     boolean existsCpfCnpjEmOutroCliente(@Param("cpfCnpj") String cpfCnpj, @Param("id") Long id);
 
     @Query("""
-        SELECT c FROM ClienteModel c
+        SELECT c FROM ClientModel c
         WHERE LOWER(c.nomeCompleto) LIKE LOWER(CONCAT('%', :termo, '%'))
            OR c.cpfCnpj LIKE CONCAT('%', :termo, '%')
     """)
-    Page<ClienteModel> buscarPorNomeOuCpfCnpj(@Param("termo") String termo, Pageable pageable);
+    Page<ClientModel> buscarPorNomeOuCpfCnpj(@Param("termo") String termo, Pageable pageable);
 }

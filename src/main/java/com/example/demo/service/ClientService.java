@@ -16,45 +16,45 @@ import org.springframework.transaction.annotation.Transactional;
 public class ClientService {
 
     @Autowired
-    ClienteRepository clienteRepository;
+    ClientRepository clientRepository;
 
     @Transactional
-    public ClienteResponseDTO criar(ClienteRequestDTO request) {
+    public ClientResponseDTO criar(ClientRequestDTO request) {
         validarCpfCnpjNovo(request.getCpfCnpj());
 
-        ClienteModel novoCliente = new ClienteModel();
-        novoCliente.setNomeCompleto(request.getNomeCompleto());
-        novoCliente.setCpfCnpj(request.getCpfCnpj());
-        novoCliente.setTelefone(request.getTelefone());
-        novoCliente.setEmail(request.getEmail());
-        novoCliente.setEndereco(request.getEndereco());
+        ClientModel novoCliente = new ClientModel();
+        novoClient.setNomeCompleto(request.getNomeCompleto());
+        novoClient.setCpfCnpj(request.getCpfCnpj());
+        novoClient.setTelefone(request.getTelefone());
+        novoClient.setEmail(request.getEmail());
+        novoClient.setEndereco(request.getEndereco());
 
-        ClienteModel salvo = clienteRepository.save(novoCliente);
+        ClientModel salvo = clientRepository.save(novoClient);
         return toResponseDTO(salvo);
     }
 
     @Transactional(readOnly = true)
-    public Page<ClienteResponseDTO> listar(String busca, Pageable pageable) {
-        Page<ClienteModel> pagina;
+    public Page<ClientResponseDTO> listar(String busca, Pageable pageable) {
+        Page<ClientModel> pagina;
 
         if (busca == null || busca.isBlank()) {
-            pagina = clienteRepository.findAll(pageable);
+            pagina = clientRepository.findAll(pageable);
         } else {
-            pagina = clienteRepository.buscarPorNomeOuCpfCnpj(busca.trim(), pageable);
+            pagina = clientRepository.buscarPorNomeOuCpfCnpj(busca.trim(), pageable);
         }
 
         return pagina.map(this::toResponseDTO);
     }
 
     @Transactional(readOnly = true)
-    public ClienteResponseDTO buscarPorId(Long id) {
-        ClienteModel cliente = buscarOuLancarExcecao(id);
+    public ClientResponseDTO buscarPorId(Long id) {
+        ClientModel cliente = buscarOuLancarExcecao(id);
         return toResponseDTO(cliente);
     }
 
     @Transactional
-    public ClienteResponseDTO atualizar(Long id, ClienteRequestDTO request) {
-        ClienteModel cliente = buscarOuLancarExcecao(id);
+    public ClientResponseDTO atualizar(Long id, ClientRequestDTO request) {
+        ClientModel cliente = buscarOuLancarExcecao(id);
 
         if (!request.getCpfCnpj().equals(cliente.getCpfCnpj())) {
             validarCpfCnpjEdicao(request.getCpfCnpj(), id);
@@ -66,13 +66,13 @@ public class ClientService {
         cliente.setEmail(request.getEmail());
         cliente.setEndereco(request.getEndereco());
 
-        ClienteModel atualizado = clienteRepository.save(cliente);
+        ClientModel atualizado = clientRepository.save(cliente);
         return toResponseDTO(atualizado);
     }
 
     public boolean deletarPorId(Long id) {
-        if (clienteRepository.existsById(id)) {
-            clienteRepository.deleteById(id);
+        if (clientRepository.existsById(id)) {
+            clientRepository.deleteById(id);
             return true;
         }
         return false;
@@ -81,8 +81,8 @@ public class ClientService {
 
     //private
 
-    private ClienteModel buscarOuLancarExcecao(Long id) {
-        return clienteRepository.findById(id)
+    private ClientModel buscarOuLancarExcecao(Long id) {
+        return clientRepository.findById(id)
             .orElseThrow(() ->
                 new RecursoNaoEncontradoException("Cliente não encontrado com id: " + id)
             );
@@ -93,7 +93,7 @@ public class ClientService {
         if (apenasDigitos.length() != 11 && apenasDigitos.length() != 14) {
             throw new RegraDeNegocioException("CPF deve ter 11 dígitos ou CNPJ deve ter 14 dígitos");
         }
-        if (clienteRepository.existsByCpfCnpj(cpfCnpj)) {
+        if (clientRepository.existsByCpfCnpj(cpfCnpj)) {
             throw new RegraDeNegocioException("Já existe um cliente cadastrado com o CPF/CNPJ: " + cpfCnpj);
         }
     }
@@ -103,13 +103,13 @@ public class ClientService {
         if (apenasDigitos.length() != 11 && apenasDigitos.length() != 14) {
             throw new RegraDeNegocioException("CPF deve ter 11 dígitos ou CNPJ deve ter 14 dígitos");
         }
-        if (clienteRepository.existsCpfCnpjEmOutroCliente(cpfCnpj, idAtual)) {
+        if (clientRepository.existsCpfCnpjEmOutroCliente(cpfCnpj, idAtual)) {
             throw new RegraDeNegocioException("Já existe outro cliente cadastrado com o CPF/CNPJ: " + cpfCnpj);
         }
     }
 
-    private ClienteResponseDTO toResponseDTO(ClienteModel model) {
-        return new ClienteResponseDTO(
+    private ClientResponseDTO toResponseDTO(ClientModel model) {
+        return new ClientResponseDTO(
             model.getId(),
             model.getNomeCompleto(),
             model.getCpfCnpj(),

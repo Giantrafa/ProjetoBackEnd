@@ -15,36 +15,36 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
-public class ClienteController {
+public class ClientController {
 
     @Autowired
-    ClienteService clienteService;
+    ClientService clientService;
 
     @GetMapping("/allClientes")
-    public Page<ClienteResponseDTO> getAllClientes(
+    public Page<ClientResponseDTO> getAllClientes(
             @RequestParam(required = false) String busca,
             @PageableDefault(size = 10, sort = "nomeCompleto", direction = Sort.Direction.ASC) Pageable pageable) {
-        return clienteService.listar(busca, pageable);
+        return clientService.listar(busca, pageable);
     }
 
     @PostMapping("/add")
-    public ClienteResponseDTO addNewCliente(@RequestBody @Valid ClienteRequestDTO cliente) {
-        return clienteService.criar(cliente);
+    public ClientResponseDTO addNewCliente(@RequestBody @Valid ClientRequestDTO cliente) {
+        return clientService.criar(cliente);
     }
 
     @GetMapping("/{id}")
-    public ClienteResponseDTO getCliente(@PathVariable Long id) {
-        return clienteService.buscarPorId(id);
+    public ClientResponseDTO getClient(@PathVariable Long id) {
+        return clientService.buscarPorId(id);
     }
 
     @PutMapping("/update/{id}")
-    public ClienteResponseDTO updateCliente(@RequestBody @Valid ClienteRequestDTO cliente, @PathVariable Long id) {
-        return clienteService.atualizar(id, cliente);
+    public ClientResponseDTO updateCliente(@RequestBody @Valid ClientRequestDTO cliente, @PathVariable Long id) {
+        return clientService.atualizar(id, cliente);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteCliente(@PathVariable Long id) {
-        boolean deletado = clienteService.deletarPorId(id);
+        boolean deletado = clientService.deletarPorId(id);
         if (deletado) {
             return ResponseEntity.status(HttpStatus.OK).build();
         }
