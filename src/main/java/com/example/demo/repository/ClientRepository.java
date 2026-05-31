@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ClienteRepository extends JpaRepository<ClienteModel, Long> {
+public interface ClientRepository extends JpaRepository<ClienteModel, Long> {
 
     Optional<ClienteModel> findByCpfCnpj(String cpfCnpj); //o spring consegue gerar o SQL sozinho
 
