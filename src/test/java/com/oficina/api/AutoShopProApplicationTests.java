@@ -1,10 +1,10 @@
-package com.medevent.api;
+package com.oficina.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MedeventApplicationTests {
+class AutoShopProApplicationTests {
 
     @Test
     void contextLoads() {

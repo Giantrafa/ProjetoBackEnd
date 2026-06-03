@@ -8,11 +8,11 @@
 		<version>4.0.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.medevent</groupId>
-	<artifactId>medevent-api</artifactId>
+	<groupId>com.oficina</groupId>
+	<artifactId>autoshop-pro-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>medevent-api</name>
-	<description>MedEvent Backend API</description>
+	<name>autoshop-pro-api</name>
+	<description>AutoShop Pro Backend API</description>
 	<url/>
 	<licenses>
 		<license/>
