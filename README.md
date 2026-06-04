@@ -1,4 +1,11 @@
 # AutoShop Pro — Backend API
+Alunos do Projeto:
+
+Vitor Ferreira
+
+Rafael De Assis
+
+
 
 API REST em Spring Boot com autenticação JWT para o sistema de gerenciamento de oficina mecânica.
 
