@@ -1,4 +1,4 @@
-package com.example.demo.security;
+package com.oficina.api.security;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -14,9 +14,9 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.UsuarioModel;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oficina.api.model.UsuarioModel;
 
 @Service
 public class TokenService {
@@ -39,8 +39,8 @@ public class TokenService {
         Map<String, Object> header = Map.of("alg", "HS256", "typ", "JWT");
         Map<String, Object> payload = new LinkedHashMap<>();
         payload.put("sub", usuario.getEmail());
-        payload.put("nome", usuario.getNome());
-        payload.put("perfil", usuario.getPerfil().name());
+        payload.put("name", usuario.getName());
+        payload.put("role", usuario.getRole().name());
         payload.put("exp", Instant.now().plus(expirationHours, ChronoUnit.HOURS).getEpochSecond());
 
         String headerEncoded = encodeJson(header);
@@ -53,18 +53,14 @@ public class TokenService {
     public boolean tokenValido(String token) {
         try {
             String[] partes = token.split("\\.");
-            if (partes.length != 3) {
-                return false;
-            }
+            if (partes.length != 3) return false;
 
             String unsignedToken = partes[0] + "." + partes[1];
-            if (!assinaturaValida(assinar(unsignedToken), partes[2])) {
-                return false;
-            }
+            if (!assinaturaValida(assinar(unsignedToken), partes[2])) return false;
 
             Number exp = (Number) lerPayload(token).get("exp");
             return exp.longValue() > Instant.now().getEpochSecond();
-        } catch (Exception exception) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -73,16 +69,16 @@ public class TokenService {
         return (String) lerPayload(token).get("sub");
     }
 
-    public String getPerfil(String token) {
-        return (String) lerPayload(token).get("perfil");
+    public String getRole(String token) {
+        return (String) lerPayload(token).get("role");
     }
 
     private String encodeJson(Map<String, Object> dados) {
         try {
             byte[] json = objectMapper.writeValueAsBytes(dados);
             return Base64.getUrlEncoder().withoutPadding().encodeToString(json);
-        } catch (Exception exception) {
-            throw new IllegalStateException("Nao foi possivel gerar o token.", exception);
+        } catch (Exception e) {
+            throw new IllegalStateException("Nao foi possivel gerar o token.", e);
         }
     }
 
@@ -91,8 +87,8 @@ public class TokenService {
             String payload = token.split("\\.")[1];
             byte[] json = Base64.getUrlDecoder().decode(payload);
             return objectMapper.readValue(json, new TypeReference<>() {});
-        } catch (Exception exception) {
-            throw new IllegalArgumentException("Token invalido.", exception);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Token invalido.", e);
         }
     }
 
@@ -103,14 +99,15 @@ public class TokenService {
             mac.init(key);
             byte[] assinatura = mac.doFinal(dados.getBytes(StandardCharsets.UTF_8));
             return Base64.getUrlEncoder().withoutPadding().encodeToString(assinatura);
-        } catch (Exception exception) {
-            throw new IllegalStateException("Nao foi possivel assinar o token.", exception);
+        } catch (Exception e) {
+            throw new IllegalStateException("Nao foi possivel assinar o token.", e);
         }
     }
 
-    private boolean assinaturaValida(String assinaturaEsperada, String assinaturaRecebida) {
-        byte[] esperada = assinaturaEsperada.getBytes(StandardCharsets.UTF_8);
-        byte[] recebida = assinaturaRecebida.getBytes(StandardCharsets.UTF_8);
-        return MessageDigest.isEqual(esperada, recebida);
+    private boolean assinaturaValida(String esperada, String recebida) {
+        return MessageDigest.isEqual(
+            esperada.getBytes(StandardCharsets.UTF_8),
+            recebida.getBytes(StandardCharsets.UTF_8)
+        );
     }
 }

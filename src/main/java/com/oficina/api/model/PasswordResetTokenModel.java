@@ -1,9 +1,9 @@
-package com.example.demo.model;
+package com.oficina.api.model;
+
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,26 +13,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "password_reset_tokens")
 @Getter
 @Setter
 @NoArgsConstructor
-public class UsuarioModel {
+public class PasswordResetTokenModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String nome;
-
     @Column(nullable = false, unique = true)
+    private String token;
+
+    @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
-    private String senha;
+    private LocalDateTime expiresAt;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Perfil perfil;
+    private boolean used = false;
 }
