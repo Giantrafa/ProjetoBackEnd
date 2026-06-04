@@ -1,4 +1,4 @@
-package com.example.demo.exception;
+package com.oficina.api.exception;
 
 public class RegraDeNegocioException extends RuntimeException {
     public RegraDeNegocioException(String mensagem) {
