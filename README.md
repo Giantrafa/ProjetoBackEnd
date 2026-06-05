@@ -1,4 +1,4 @@
-# AutoShop Pro — Backend API
+cd C:\Users\sergi\Desktop# AutoShop Pro — Backend API
 Alunos do Projeto:
 
 Vitor Ferreira
@@ -125,3 +125,18 @@ Novos cadastros recebem o perfil `CLIENTE` por padrão.
 
 Com o servidor rodando, acesse:
 `http://localhost:8080/swagger-ui.html`
+
+
+## Módulos gerados
+
+Foram adicionados os módulos do plano da imagem:
+
+- Cliente: `/api/v1/clientes`
+- Veículo: `/api/v1/veiculos`
+- Serviço: `/api/v1/servicos`
+- Peça/Estoque: `/api/v1/pecas`
+- Ordem de Serviço: `/api/v1/ordens-servico`
+- Dashboard: `/api/v1/dashboard/resumo`
+- Strategy de preço: `PADRAO`, `DESCONTO_10` e `URGENCIA_20`
+
+Todos os endpoints acima exigem login JWT, exceto `/auth/login`, `/auth/register`, `/auth/forgot-password` e `/auth/reset-password`.
