@@ -6,9 +6,9 @@
 |---|---|---|
 |  Rafael Assis  | Usuário / Auth | UsuarioModel, AuthController, JWT, SecurityConfig, PasswordReset |
 | Vitor Ferreira | Cliente | ClienteModel, ClienteService, ClienteController, ClienteDTO |
-|  Integrante 3  | Veículo | VeiculoModel, VeiculoService, VeiculoController, VeiculoDTO |
-|  Integrante 4  | Serviço | ServicoModel, ServicoService, ServicoController, toggle-ativo |
-|  Integrante 5  | Peça / OrdemServico | PecaModel, OrdemServicoModel, controle de estoque, Strategy de preço |
+|     Sergio     | Veículo | VeiculoModel, VeiculoService, VeiculoController, VeiculoDTO |
+| Vitor Ferreira | Serviço | ServicoModel, ServicoService, ServicoController, toggle-ativo |
+| Vitor Ferreira | Peça / OrdemServico | PecaModel, OrdemServicoModel, controle de estoque, Strategy de preço |
 
 ---
 
