@@ -60,8 +60,4 @@ public class VeiculoController {
         veiculoService.excluir(id);
     }
     
-    @GetMapping("/api/v1/clientes/{clienteId}/veiculos")
-    public List<VeiculoResponseDTO> listarPorCliente(@PathVariable Long clienteId) {
-        return veiculoService.listarPorCliente(clienteId);
-    }
 }
